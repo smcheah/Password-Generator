@@ -10,16 +10,17 @@ function writePassword() {
 }
 
 function generatePassword() {
-  var password = []; //criteria[0] length
-  var lowerlist = ['abcdefghijklmnopqrstuvwxyz'];
-  var upperlist = [lowerlist[0].toUpperCase()];
-  var numlist = ['1234567890'];
-  var scharlist = [" !#$%&'()*+,-./:;<=>?@[\]^_`{|}~"]; //omitted double quotes
+  var password = [];
+  //character types: lowercase, uppercase, numbers, special
+  var chartype = ['abcdefghijklmnopqrstuvwxyz',
+    'abcdefghijklmnopqrstuvwxyz'.toUpperCase(),
+    '1234567890',
+    "\"!#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"]; //removed 'space'
 
   // asks for password length, returns if out of range
-  var length = prompt('Enter the password length (must be 8 - 128): ');
-  if (length > 7 && length < 129) {
-    alert('You have chosen a password length of ' + length);
+  var userlength = prompt('Enter the password length (must be 8 - 128): ');
+  if (userlength > 7 && userlength < 129) {
+    alert(`You have chosen a password length of ${userlength}`);
   } else {
     alert('The password is required to be between 8 - 120 characters.');
     return ('try again: please choose a number between 8 and 128.');
@@ -31,9 +32,7 @@ function generatePassword() {
   var numeric = confirm('Does the password require numeric values?');
   var specialchar = confirm('Does the password require special characters?');
 
-  var criteria = [length, lowercase, uppercase, numeric, specialchar];
-
-  // if none are true then it displays an alert and returns
+  // if no character types are chosen, then it displays an alert and returns
   if (lowercase === true || uppercase === true || numeric === true || specialchar === true) {
     alert(`Your character types will contain: \n- lowercase: ${lowercase}\n- uppercase: ${uppercase}\n- numeric: ${numeric}\n- special characters: ${specialchar}`);
   } else {
@@ -41,22 +40,28 @@ function generatePassword() {
     return ('try again: please choose at least one character type.');
   }
 
-  // continuously checks if length of password is met
-  while (password.length != criteria[0]) {
-    if (password.length != criteria[0]) {
-      password.push(lowerlist[0].charAt(Math.floor(Math.random() * 26) + 1));
+  var chartypechoice = [lowercase, uppercase, numeric, specialchar];
+  var count = [0, 0, 0, 0]; // keeps track of char types not used
+  // generates password randomly
+  while (password.length != userlength) {
+    var randomindex = Math.floor(Math.random() * 4);
+    var index = randomindex;
+
+    if (chartypechoice[index] === true) {
+      password.push(chartype[index].charAt(Math.floor(Math.random() * chartype[index].length) + 1)); //add a random character to the password
+      count[index]++;
     }
-    if (password.length != criteria[0]) {
-      password.push(upperlist[0].charAt(Math.floor(Math.random() * 26) + 1));
-    }
-    if (password.length != criteria[0]) {
-      password.push(numlist[0].charAt(Math.floor(Math.random() * 10) + 1));
-    }
-    if (password.length != criteria[0]) {
-      password.push(scharlist[0].charAt(Math.floor(Math.random() * 31) + 1));
+
+    //if certain characters have not been used
+    if ((count[0] === 0 || count[1] === 0 || count[2] === 0 || count[3] === 0)) {
+      for (var i = 0; i < 4; i++) {
+        if (count[i] === 0 && chartypechoice[i] === true) {
+          password.push(chartype[i].charAt(Math.floor(Math.random() * chartype[i].length) + 1)); //add a character to the password
+          count[i]++;
+        }
+      }
     }
   }
-
   return (password.join(''));
 }
 
