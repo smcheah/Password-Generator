@@ -10,6 +10,7 @@ function writePassword() {
 }
 
 function generatePassword() {
+
   var password = [];
   //character types: lowercase, uppercase, numbers, special
   var chartype = ['abcdefghijklmnopqrstuvwxyz',
@@ -62,6 +63,7 @@ function generatePassword() {
       }
     }
   }
+
   return (password.join(''));
 }
 
