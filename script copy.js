@@ -10,7 +10,7 @@ function writePassword() {
 }
 
 function generatePassword() {
-  var password = [];
+  var randomPassword = [];
 
   // input length of password
   var inputLength = InputLength();
@@ -32,9 +32,9 @@ function generatePassword() {
   }
 
   // generates password randomly
-  RandomisePassword(password, inputLength, inputCharTypes);
+  RandomisePassword(randomPassword, inputLength, inputCharTypes);
   
-  return (password.join(''));
+  return (randomPassword.join(''));
 }
 
 function InputLength() {
@@ -60,7 +60,7 @@ function IsEqualTo(input) {
   return equal;
 }
 
-function RandomisePassword(password, inputLength, inputCharTypes) {
+function RandomisePassword(randomPassword, inputLength, inputCharTypes) {
   //character types: lowercase, uppercase, numbers, special
   var charType = ['abcdefghijklmnopqrstuvwxyz',
     'abcdefghijklmnopqrstuvwxyz'.toUpperCase(),
@@ -69,19 +69,19 @@ function RandomisePassword(password, inputLength, inputCharTypes) {
 
   var count = [0, 0, 0, 0]; // keeps track of char types not used
 
-  while (password.length != inputLength) {
+  while (randomPassword.length != inputLength) {
     var randomIndex = Math.floor(Math.random() * 4);
     var index = randomIndex;
 
     if (inputCharTypes[index] === true) {
-      password.push(charType[index].charAt(Math.floor(Math.random() * charType[index].length) + 1)); //add a random character to the password
+      randomPassword.push(charType[index].charAt(Math.floor(Math.random() * charType[index].length) + 1)); //add a random character to the password
       count[index]++;
     }
     //if certain characters have not been used
     if (count.some(IsEqualTo(0))) {
       for (var i = 0; i < 4; i++) {
         if (count[i] === 0 && inputCharTypes[i] === true) {
-          password.push(charType[i].charAt(Math.floor(Math.random() * charType[i].length) + 1)); //add a character to the password
+          randomPassword.push(charType[i].charAt(Math.floor(Math.random() * charType[i].length) + 1)); //add a character to the password
           count[i]++;
         }
       }

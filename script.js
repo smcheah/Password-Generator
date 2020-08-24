@@ -11,7 +11,7 @@ function writePassword() {
 
 function generatePassword() {
 
-  var password = [];
+  var randomPassword = [];
   //character types: lowercase, uppercase, numbers, special
   var chartype = ['abcdefghijklmnopqrstuvwxyz',
     'abcdefghijklmnopqrstuvwxyz'.toUpperCase(),
@@ -44,12 +44,12 @@ function generatePassword() {
   var chartypechoice = [lowercase, uppercase, numeric, specialchar];
   var count = [0, 0, 0, 0]; // keeps track of char types not used
   // generates password randomly
-  while (password.length != userlength) {
+  while (randomPassword.length != userlength) {
     var randomindex = Math.floor(Math.random() * 4);
     var index = randomindex;
 
     if (chartypechoice[index] === true) {
-      password.push(chartype[index].charAt(Math.floor(Math.random() * chartype[index].length) + 1)); //add a random character to the password
+      randomPassword.push(chartype[index].charAt(Math.floor(Math.random() * chartype[index].length) + 1)); //add a random character to the password
       count[index]++;
     }
 
@@ -57,14 +57,14 @@ function generatePassword() {
     if ((count[0] === 0 || count[1] === 0 || count[2] === 0 || count[3] === 0)) {
       for (var i = 0; i < 4; i++) {
         if (count[i] === 0 && chartypechoice[i] === true) {
-          password.push(chartype[i].charAt(Math.floor(Math.random() * chartype[i].length) + 1)); //add a character to the password
+          randomPassword.push(chartype[i].charAt(Math.floor(Math.random() * chartype[i].length) + 1)); //add a character to the password
           count[i]++;
         }
       }
     }
   }
 
-  return (password.join(''));
+  return (randomPassword.join(''));
 }
 
 // Add event listener to generate button
